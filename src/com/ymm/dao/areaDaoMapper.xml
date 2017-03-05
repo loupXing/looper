@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper  namespace="com.ymm.dao.AreaDao">
+  
+  <resultMap type="com.ymm.entity.ProvinceCity" id="provinceCityResultMap">
+    <result property="province" column="province" />
+    <result property="province_n" column="province_n"/>
+    <result property="city" column="city"/>
+    <result property="city_n" column="city_n"/>
+  </resultMap>
+  
+  <resultMap type="com.ymm.entity.CityDistrict" id="cityDistrictResultMap">
+    <result property="city" column="city"/>
+    <result property="city_n" column="city_n"/>
+    <result property="district" column="district"/>
+    <result property="district_n" column="district_n"/>
+  </resultMap>
+  
+  <resultMap type="com.ymm.entity.DistrictStreet" id="districtStreetResultMap">
+    <result property="district" column="district"/>
+    <result property="district_n" column="district_n"/>
+    <result property="street" column="street"/>
+    <result property="street_n" column="street_n"/>
+  </resultMap>
+  
+   <insert id="insertProvinceCity" parameterType="java.util.List">
+        <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+          SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into  t_ymm_provincecity(province,province_n,city,city_n)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >  
+        	(#{item.province},#{item.province_n},#{item.city},#{item.city_n})  
+    	</foreach>  
+   </insert>
+   
+   <insert id="insertCityDistrict" parameterType="java.util.List">
+        <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+          SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into  t_ymm_citydistrict(city,city_n,district,district_n)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >  
+        	(#{item.city},#{item.city_n},#{item.district},#{item.district_n})  
+    	</foreach>  
+   </insert>
+   
+   <insert id="insertDistrictStreet" parameterType="java.util.List">
+        <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+          SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into  t_ymm_districtstreet(district,district_n,street,street_n)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >  
+        	(#{item.district},#{item.district_n},#{item.street},#{item.street_n})  
+    	</foreach>  
+   </insert>
+    
+</mapper>
